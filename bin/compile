@@ -4,6 +4,23 @@
 # fail fast
 set -e
 
+
+jdk_overlay() {
+  jdkDir=${1:?}
+  overlayDir=${2:?}
+  shopt -s dotglob
+  cacertPath="lib/security/cacerts"
+  if [ -d ${jdkDir} ] && [ -d ${overlayDir} ]; then
+    # delete the symlink because a cp will error
+    if [ -f ${overlayDir}/jre/${cacertPath} ] && [ -f ${jdkDir}/jre/${cacertPath} ]; then
+      rm ${jdkDir}/jre/${cacertPath}
+    elif [ -f ${overlayDir}/${cacertPath} ] && [ -f ${jdkDir}/${cacertPath} ]; then
+      rm ${jdkDir}/${cacertPath}
+    fi
+    cp -r ${overlayDir}/* ${jdkDir}
+  fi
+}
+
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
 BUILD_DIR=$1
