@@ -129,7 +129,7 @@ if [ ! -f ${BUILD_DIR}/system.properties ]; then
 fi
 
 # install JDK
-javaVersion=1.7
+javaVersion=1.8
 echo -n "-----> Installing OpenJDK ${javaVersion}..."
 install_java ${BUILD_DIR} ${javaVersion}
 # jdk_overlay ${BUILD_DIR}
